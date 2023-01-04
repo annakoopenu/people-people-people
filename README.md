@@ -4,6 +4,8 @@ This project includes a [Node.js](https://nodejs.org/en/about/) server script th
 
 The home page presents the user with a poll where they can choose an option, then the page presents the results in a chart. The admin page displays the log of past choices and allows the user to clear it by supplying an admin key (you can set this up by following the steps in `TODO.md`). 🔒
 
+_Last updated: 4 Jan 2023_
+
 ## Prerequisites
 
 To get best use out of this project you'll ideally be familiar with JavaScript and have a little Node.js experience–check out [Hello Node](https://glitch.com/~glitch-hello-node) if you haven't already!
