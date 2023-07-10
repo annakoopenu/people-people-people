@@ -7,12 +7,12 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "fastify": "^4.17.0",
+    "fastify": "^4.19.2",
     "handlebars": "^4.7.7",
-    "sqlite": "^4.2.0",
+    "sqlite": "^4.2.1",
     "sqlite3": "^5.1.6",
-    "@fastify/view": "^7.4.1",
-    "@fastify/static": "^6.10.1",
+    "@fastify/view": "^8.0.0",
+    "@fastify/static": "^6.10.2",
     "@fastify/formbody": "^7.4.0"
   },
   "engines": {

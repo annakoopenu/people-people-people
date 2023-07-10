@@ -4,7 +4,7 @@ This project includes a [Node.js](https://nodejs.org/en/about/) server script th
 
 The home page presents the user with a poll where they can choose an option, then the page presents the results in a chart. The admin page displays the log of past choices and allows the user to clear it by supplying an admin key (you can set this up by following the steps in `TODO.md`). 🔒
 
-_Last updated: 03 May 2023_
+_Last updated: 10 July 2023_
 
 ## Prerequisites
 
