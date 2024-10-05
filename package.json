@@ -11,6 +11,7 @@
     "@fastify/static": "^6.10.2",
     "@fastify/view": "^8.0.0",
     "csv-parser": "^3.0.0",
+    "d3-cloud": "^1.2.7",
     "fastify": "^4.21.0",
     "handlebars": "^4.7.8",
     "sqlite": "^5.0.1",
