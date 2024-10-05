@@ -46,17 +46,15 @@ const db = new sqlite3.Database('./.data/sqlite.db'); // Path to your SQLite dat
 /**
  * Home route for the app
  *
- * Return the poll options from the database helper script
- * The home route may be called on remix in which case the db needs setup
- *
+ * Return the available people from the 'people' table.
  * Client can request raw data using a query parameter
  */
 fastify.get("/", async (request, reply) => {
   let params = request.query.raw ? {} : { seo: seo };
 
   try {
-    // Get the available choices from the database (fetching from 'people' table)
-    const options = await new Promise((resolve, reject) => {
+    // Get the available people from the database
+    const people = await new Promise((resolve, reject) => {
       db.all('SELECT * FROM people', (err, rows) => {
         if (err) {
           console.error("Database Error:", err); // Log the error
@@ -67,15 +65,11 @@ fastify.get("/", async (request, reply) => {
       });
     });
 
-    if (options) {
-      params.optionNames = options.map((choice) => choice.name); // Assuming 'name' is a column in 'people'
-      params.optionCounts = options.map(() => 1); // Placeholder for count (could be replaced with actual data)
+    if (people) {
+      params.optionNames = JSON.stringify(people); // Pass the data as JSON string
     } else {
-      params.error = data.errorMessage;
+      params.error = "No people data available.";
     }
-
-    // Check if data is empty or not set up
-    if (options && params.optionNames.length < 1) params.setup = data.setupMessage;
 
     // Send the page options or raw JSON data if the client requested it
     return request.query.raw
@@ -90,10 +84,7 @@ fastify.get("/", async (request, reply) => {
 
 /**
  * Post route to process user vote
- *
- * Retrieve vote from body data
- * Send vote to database helper
- * Return updated list of votes
+ * Retrieve vote from body data, send to database helper, return updated list of votes
  */
 fastify.post("/", async (request, reply) => {
   let params = request.query.raw ? {} : { seo: seo };
@@ -108,11 +99,10 @@ fastify.post("/", async (request, reply) => {
       options = await processVote(request.body.language);
       if (options) {
         // We send the choices and numbers in parallel arrays
-        params.optionNames = options.map((choice) => choice.language); // Assuming there's a 'language' column
-        params.optionCounts = options.map(() => 1); // Placeholder count
+        params.optionNames = JSON.stringify(options); // Pass data as JSON string
       }
     }
-    params.error = options ? null : data.errorMessage;
+    params.error = options ? null : "No voting data available.";
 
     // Return the info to the client
     return request.query.raw
@@ -127,14 +117,13 @@ fastify.post("/", async (request, reply) => {
 
 /**
  * Admin endpoint returns log of votes
- *
  * Send raw json or the admin handlebars page
  */
 fastify.get("/logs", async (request, reply) => {
   let params = request.query.raw ? {} : { seo: seo };
 
   try {
-    // Get the log history from the db (assuming a 'logs' table)
+    // Get the log history from the db
     params.optionHistory = await new Promise((resolve, reject) => {
       db.all('SELECT * FROM logs', (err, rows) => {
         if (err) {
@@ -146,7 +135,7 @@ fastify.get("/logs", async (request, reply) => {
       });
     });
 
-    params.error = params.optionHistory ? null : data.errorMessage;
+    params.error = params.optionHistory ? null : "No logs available.";
 
     // Send the log list
     return request.query.raw
@@ -161,10 +150,8 @@ fastify.get("/logs", async (request, reply) => {
 
 /**
  * Admin endpoint to empty all logs
- *
  * Requires authorization (see setup instructions in README)
- * If auth fails, return a 401 and the log list
- * If auth is successful, empty the history
+ * If auth fails, return a 401 and the log list. If auth is successful, empty the history
  */
 fastify.post("/reset", async (request, reply) => {
   let params = request.query.raw ? {} : { seo: seo };
@@ -208,7 +195,7 @@ fastify.post("/reset", async (request, reply) => {
       });
 
       // Check for errors - method would return false value
-      params.error = params.optionHistory ? null : data.errorMessage;
+      params.error = params.optionHistory ? null : "Error clearing history.";
     }
 
     // Send a 401 if auth failed, 200 otherwise

@@ -55,8 +55,7 @@
         .words(words.map(d => ({
           text: d.name,
           size: Math.random() * 40 + 20, // random sizes for visual variety
-          link: d.link,
-          wiki: d.wiki_link,
+          link: d.wiki_link, // Use wiki_link for the URL
         })))
         .padding(5)
         .rotate(() => ~~(Math.random() * 2) * 90)
@@ -80,19 +79,19 @@
           .attr("transform", d => `translate(${d.x}, ${d.y}) rotate(${d.rotate})`)
           .text(d => d.text)
           .on("click", function (event, d) {
-            window.open(d.wiki);
+            window.open(d.link); // Open Wikipedia link on click
           })
-          .on("mouseover", function (event, d) {
+          .on("mouseover", function () {
             d3.select(this).style("fill", "#ff6666");
           })
-          .on("mouseout", function (event, d) {
+          .on("mouseout", function () {
             d3.select(this).style("fill", "#69b3a2");
           });
       }
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      const peopleData = {{{json optionNames}}}; // Pass from the server
+      const peopleData = {{optionNames}}; // Data passed from the server as JSON
       createWordCloud(peopleData);
     });
   </script>
