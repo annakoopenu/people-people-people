@@ -13,8 +13,8 @@ const path = require("path");
 
 // Require the fastify framework and instantiate it
 const fastify = require("fastify")({
-  // Set this to true for detailed logging:
-  logger: false,
+  // Enable detailed logging for debugging
+  logger: true,
 });
 
 // Setup our static files
@@ -39,9 +39,9 @@ if (seo.url === "glitch-default") {
   seo.url = `https://${process.env.PROJECT_DOMAIN}.glitch.me`;
 }
 
-// We use a module for handling database operations in /src
-const data = require("./src/data.json");
-const db = require("./src/" + data.database);
+// SQLite setup using sqlite3
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('./.data/sqlite.db'); // Path to your SQLite database
 
 /**
  * Home route for the app
@@ -52,31 +52,40 @@ const db = require("./src/" + data.database);
  * Client can request raw data using a query parameter
  */
 fastify.get("/", async (request, reply) => {
-  /* 
-  Params is the data we pass to the client
-  - SEO values for front-end UI but not for raw data
-  */
   let params = request.query.raw ? {} : { seo: seo };
 
-  // Get the available choices from the database
-  const options = await db.getOptions();
-  if (options) {
-    params.optionNames = options.map((choice) => choice.language);
-    params.optionCounts = options.map((choice) => choice.picks);
+  try {
+    // Get the available choices from the database (fetching from 'people' table)
+    const options = await new Promise((resolve, reject) => {
+      db.all('SELECT * FROM people', (err, rows) => {
+        if (err) {
+          console.error("Database Error:", err); // Log the error
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
+
+    if (options) {
+      params.optionNames = options.map((choice) => choice.name); // Assuming 'name' is a column in 'people'
+      params.optionCounts = options.map(() => 1); // Placeholder for count (could be replaced with actual data)
+    } else {
+      params.error = data.errorMessage;
+    }
+
+    // Check if data is empty or not set up
+    if (options && params.optionNames.length < 1) params.setup = data.setupMessage;
+
+    // Send the page options or raw JSON data if the client requested it
+    return request.query.raw
+      ? reply.send(params)
+      : reply.view("/src/pages/index.hbs", params);
+
+  } catch (error) {
+    console.error("Error in Home Route:", error);  // Log the error
+    return reply.code(500).send({ error: "Internal Server Error" });
   }
-  // Let the user know if there was a db error
-  else params.error = data.errorMessage;
-
-  // Check in case the data is empty or not setup yet
-  if (options && params.optionNames.length < 1)
-    params.setup = data.setupMessage;
-
-  // ADD PARAMS FROM TODO HERE
-
-  // Send the page options or raw JSON data if the client requested it
-  return request.query.raw
-    ? reply.send(params)
-    : reply.view("/src/pages/index.hbs", params);
 });
 
 /**
@@ -87,28 +96,33 @@ fastify.get("/", async (request, reply) => {
  * Return updated list of votes
  */
 fastify.post("/", async (request, reply) => {
-  // We only send seo if the client is requesting the front-end ui
   let params = request.query.raw ? {} : { seo: seo };
 
   // Flag to indicate we want to show the poll results instead of the poll form
   params.results = true;
   let options;
 
-  // We have a vote - send to the db helper to process and return results
-  if (request.body.language) {
-    options = await db.processVote(request.body.language);
-    if (options) {
-      // We send the choices and numbers in parallel arrays
-      params.optionNames = options.map((choice) => choice.language);
-      params.optionCounts = options.map((choice) => choice.picks);
+  try {
+    // We have a vote - send it to the db helper to process and return results
+    if (request.body.language) {
+      options = await processVote(request.body.language);
+      if (options) {
+        // We send the choices and numbers in parallel arrays
+        params.optionNames = options.map((choice) => choice.language); // Assuming there's a 'language' column
+        params.optionCounts = options.map(() => 1); // Placeholder count
+      }
     }
-  }
-  params.error = options ? null : data.errorMessage;
+    params.error = options ? null : data.errorMessage;
 
-  // Return the info to the client
-  return request.query.raw
-    ? reply.send(params)
-    : reply.view("/src/pages/index.hbs", params);
+    // Return the info to the client
+    return request.query.raw
+      ? reply.send(params)
+      : reply.view("/src/pages/index.hbs", params);
+
+  } catch (error) {
+    console.error("Error in Post Route:", error);  // Log the error
+    return reply.code(500).send({ error: "Internal Server Error" });
+  }
 });
 
 /**
@@ -119,16 +133,30 @@ fastify.post("/", async (request, reply) => {
 fastify.get("/logs", async (request, reply) => {
   let params = request.query.raw ? {} : { seo: seo };
 
-  // Get the log history from the db
-  params.optionHistory = await db.getLogs();
+  try {
+    // Get the log history from the db (assuming a 'logs' table)
+    params.optionHistory = await new Promise((resolve, reject) => {
+      db.all('SELECT * FROM logs', (err, rows) => {
+        if (err) {
+          console.error("Database Error:", err); // Log the error
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
 
-  // Let the user know if there's an error
-  params.error = params.optionHistory ? null : data.errorMessage;
+    params.error = params.optionHistory ? null : data.errorMessage;
 
-  // Send the log list
-  return request.query.raw
-    ? reply.send(params)
-    : reply.view("/src/pages/admin.hbs", params);
+    // Send the log list
+    return request.query.raw
+      ? reply.send(params)
+      : reply.view("/src/pages/admin.hbs", params);
+
+  } catch (error) {
+    console.error("Error in Logs Route:", error);  // Log the error
+    return reply.code(500).send({ error: "Internal Server Error" });
+  }
 });
 
 /**
@@ -141,37 +169,58 @@ fastify.get("/logs", async (request, reply) => {
 fastify.post("/reset", async (request, reply) => {
   let params = request.query.raw ? {} : { seo: seo };
 
-  /* 
-  Authenticate the user request by checking against the env key variable
-  - make sure we have a key in the env and body, and that they match
-  */
-  if (
-    !request.body.key ||
-    request.body.key.length < 1 ||
-    !process.env.ADMIN_KEY ||
-    request.body.key !== process.env.ADMIN_KEY
-  ) {
-    console.error("Auth fail");
+  try {
+    /* 
+    Authenticate the user request by checking against the env key variable
+    - make sure we have a key in the env and body, and that they match
+    */
+    if (
+      !request.body.key ||
+      request.body.key.length < 1 ||
+      !process.env.ADMIN_KEY ||
+      request.body.key !== process.env.ADMIN_KEY
+    ) {
+      console.error("Auth fail");
 
-    // Auth failed, return the log data plus a failed flag
-    params.failed = "You entered invalid credentials!";
+      // Auth failed, return the log data plus a failed flag
+      params.failed = "You entered invalid credentials!";
 
-    // Get the log list
-    params.optionHistory = await db.getLogs();
-  } else {
-    // We have a valid key and can clear the log
-    params.optionHistory = await db.clearHistory();
+      // Get the log list
+      params.optionHistory = await new Promise((resolve, reject) => {
+        db.all('SELECT * FROM logs', (err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(rows);
+          }
+        });
+      });
+    } else {
+      // We have a valid key and can clear the log
+      params.optionHistory = await new Promise((resolve, reject) => {
+        db.run('DELETE FROM logs', (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(true);
+          }
+        });
+      });
 
-    // Check for errors - method would return false value
-    params.error = params.optionHistory ? null : data.errorMessage;
+      // Check for errors - method would return false value
+      params.error = params.optionHistory ? null : data.errorMessage;
+    }
+
+    // Send a 401 if auth failed, 200 otherwise
+    const status = params.failed ? 401 : 200;
+    return request.query.raw
+      ? reply.status(status).send(params)
+      : reply.status(status).view("/src/pages/admin.hbs", params);
+
+  } catch (error) {
+    console.error("Error in Reset Route:", error);  // Log the error
+    return reply.code(500).send({ error: "Internal Server Error" });
   }
-
-  // Send a 401 if auth failed, 200 otherwise
-  const status = params.failed ? 401 : 200;
-  // Send an unauthorized status code if the user credentials failed
-  return request.query.raw
-    ? reply.status(status).send(params)
-    : reply.status(status).view("/src/pages/admin.hbs", params);
 });
 
 // Run the server and report out to the logs
@@ -185,3 +234,27 @@ fastify.listen(
     console.log(`Your app is listening on ${address}`);
   }
 );
+
+/**
+ * Helper function to process the vote
+ * Updates vote count and returns the current options
+ */
+async function processVote(language) {
+  return new Promise((resolve, reject) => {
+    // Assuming there's a 'votes' table with a 'picks' column
+    db.run('UPDATE votes SET picks = picks + 1 WHERE language = ?', [language], function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        // Return the updated options (fetching from 'votes' table)
+        db.all('SELECT * FROM votes', (err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(rows);
+          }
+        });
+      }
+    });
+  });
+}

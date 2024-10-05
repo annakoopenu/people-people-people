@@ -97,6 +97,8 @@
       <p>
         A poll built with Chart.js and powered by Node.js with a {{seo.db}} database.
       </p>
+       <div id="word-cloud-container"></div>
+      
       {{#if error}}
       <p class="error">
         {{error}}
@@ -122,6 +124,9 @@
         </p>
         <!-- If the user hasn't already made a choice we show the poll -->
       </div>
+      
+       <div id="word-cloud-container"></div>
+      
       
       {{else}}
       <h2>
@@ -172,7 +177,7 @@
         alt="" />
       Remix on Glitch
     </a>
-    <div id="word-cloud-container"></div>
+   
   </footer>
 </body>
 
