@@ -2,13 +2,6 @@
 <html lang="en">
 
 <head>
-
-  <!-- 
-    Handlebars template for the site 
-    - Data for famous people and their quotes/creations.
-    - Displays a word cloud with clickable links to Wikipedia and their works.
-  -->
-
   <meta charset="utf-8" />
   <link rel="icon" href="https://glitch.com/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -58,7 +51,9 @@
           link: d.wiki_link, // Use wiki_link for the URL
         })))
         .padding(5)
-        .rotate(() => ~~(Math.random() * 2) * 90)
+  //      .rotate(() => ~~(Math.random() * 2) * 90)
+        .rotate(() => 0) // Ensures all words are horizontal
+
         .fontSize(d => d.size)
         .on("end", draw);
 
@@ -91,11 +86,10 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-      const peopleData = {{optionNames}}; // Data passed from the server as JSON
+      const peopleData = {{{optionNames}}}; // Parse JSON string
       createWordCloud(peopleData);
     });
   </script>
-
 </head>
 
 <body>
