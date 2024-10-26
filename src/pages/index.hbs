@@ -25,56 +25,45 @@
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
 
-  <style>
-    #word-cloud-container {
-      width: 100%;
-      height: 500px;
-      margin-top: 20px;
-    }
-
-    .person-link {
-      font-size: 20px;
-      cursor: pointer;
-    }
-  </style>
-
   <script type="text/javascript">
     function createWordCloud(words) {
       const width = document.getElementById('word-cloud-container').offsetWidth;
-      const height = 500;
+      const height = words.length * 40; // Adjust height based on the number of words
 
       const layout = d3.layout.cloud()
         .size([width, height])
         .words(words.map(d => ({
           text: d.name,
-          size: Math.random() * 40 + 20, // random sizes for visual variety
-          link: d.wiki_link, // Use wiki_link for the URL
+          size: Math.random() * 20 + 15,
+          link: d.wiki_link,
         })))
         .padding(5)
-  //      .rotate(() => ~~(Math.random() * 2) * 90)
-        .rotate(() => 0) // Ensures all words are horizontal
-
+        .rotate(() => 0) // All words horizontal
         .fontSize(d => d.size)
-        .on("end", draw);
+        .on('end', draw);
 
       layout.start();
 
       function draw(words) {
-        d3.select("#word-cloud-container").append("svg")
+        const container = d3.select("#word-cloud-container");
+        container.html(''); // Clear previous cloud
+
+        const svg = container.append("svg")
           .attr("width", width)
           .attr("height", height)
           .append("g")
-          .attr("transform", "translate(" + [width / 2, height / 2] + ")")
-          .selectAll("text")
+          .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+        svg.selectAll("text")
           .data(words)
           .enter().append("text")
-          .style("font-size", d => d.size + "px")
+          .style("font-size", d => `${d.size}px`)
           .style("fill", "#69b3a2")
           .attr("text-anchor", "middle")
           .attr("transform", d => `translate(${d.x}, ${d.y}) rotate(${d.rotate})`)
           .text(d => d.text)
-          .on("click", function (event, d) {
-            window.open(d.link); // Open Wikipedia link on click
+          .on("click", (event, d) => {
+            if (d.link) window.open(d.link, '_blank');
           })
           .on("mouseover", function () {
             d3.select(this).style("fill", "#ff6666");
@@ -94,42 +83,29 @@
 
 <body>
   <div class="wrapper">
-    <div class="content" role="main">
-      <h1>Famous People Word Cloud</h1>
-      <p>
-        Explore famous people and their creations. Click on a name to go to their Wikipedia page.
-      </p>
+    <h1>Famous People Word Cloud</h1>
+    <p>Explore famous people and their creations. Click on a name to go to their Wikipedia page.</p>
 
-      <div id="word-cloud-container"></div>
+    <div id="word-cloud-container"></div>
 
-      {{#if error}}
-      <p class="error">
-        {{error}}
-      </p>
-      {{else}}
-      <h2>People Data</h2>
-
+    {{#if error}}
+      <p class="error">{{error}}</p>
+    {{else}}
+      <h2></h2>
       {{#if optionNames}}
-      <ul>
-        {{#each optionNames}}
-        <li>
-          <a href="{{wiki_link}}" target="_blank">{{name}}</a> - {{bio}}
-        </li>
-        {{/each}}
-      </ul>
+        <ul>
+          {{#each optionNames}}
+            <li><a href="{{wiki_link}}" target="_blank">{{name}}</a> - {{bio}}</li>
+          {{/each}}
+        </ul>
       {{else}}
-      <p>No data available. Please try again later.</p>
+        <p>No data available. Please try again later.</p>
       {{/if}}
-      {{/if}}
-
-    </div>
+    {{/if}}
   </div>
-  <!-- The footer -->
+
   <footer class="footer">
-    <div class="links"></div>
-    <a href="/">Home</a>
-    <span class="divider">|</span>
-    <a href="/logs">Admin</a>
+    <a href="/">Home</a> | <a href="/logs">Admin</a>
   </footer>
 </body>
 

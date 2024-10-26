@@ -1,25 +1,52 @@
-name,bio,year_of_birth,date_of_birth,wiki_link,more
-Albert Einstein,Physicist known for the theory of relativity,1879,1879-03-14,https://en.wikipedia.org/wiki/Albert_Einstein,Nobel Prize in Physics
-Frida Kahlo,Mexican painter known for her self-portraits,1907,1907-07-06,https://en.wikipedia.org/wiki/Frida_Kahlo,Famous for surreal and vibrant self-portraits
-Bertrand Russell,British philosopher and logician,1872,1872-05-18,https://en.wikipedia.org/wiki/Bertrand_Russell,Nobel Prize in Literature
-Sandro Botticelli,Italian painter of the Early Renaissance,1445,1445-03-01,https://en.wikipedia.org/wiki/Sandro_Botticelli,Famous for 'The Birth of Venus'
-Oscar Wilde,Irish poet and playwright,1854,1854-10-16,https://en.wikipedia.org/wiki/Oscar_Wilde,Famous for 'The Picture of Dorian Gray'
-Thomas Wolfe,American novelist,1900,1900-10-03,https://en.wikipedia.org/wiki/Thomas_Wolfe,Author of 'Look Homeward and 'Angel'
-Boris Grebenshchikov,Russian rock musician and songwriter,1953,1953-11-27,https://en.wikipedia.org/wiki/Boris_Grebenshchikov,Founder of the band Aquarium
-Pyotr Ilyich Tchaikovsky,Russian composer of the Romantic period,1840,1840-05-07,https://en.wikipedia.org/wiki/Pyotr_Ilyich_Tchaikovsky,Composed famous ballets like 'Swan Lake' and 'The Nutcracker'
-Zhanna Aguzarova,Russian pop-rock singer and former vocalist of the band Bravo,1962,1962-07-07,https://en.wikipedia.org/wiki/Zhanna_Aguzarova,A major figure in the Soviet rock scene
-Cleopatra,Last active ruler of the Ptolemaic Kingdom of Egypt,69-BC,69-BC,https://en.wikipedia.org/wiki/Cleopatra,Renowned for her intelligence and political acumen
-Plato,Classical Greek philosopher and founder of the Academy,428-BC,428-BC,https://en.wikipedia.org/wiki/Plato,Student of Socrates and teacher of Aristotle
-Socrates,Classical Greek philosopher known for his contributions to ethics,470-BC,470-BC,https://en.wikipedia.org/wiki/Socrates,Founder of Western philosophy
-Amy Winehouse,British singer-songwriter known for her deep and expressive vocals',1983,1983-09-14,https://en.wikipedia.org/wiki/Amy_Winehouse,Known for 'Back to Black'
-Diana Arbenina,Russian rock singer leader of the band Night Snipers,1974,1974-07-08,https://en.wikipedia.org/wiki/Diana_Arbenina,Prominent figure in Russian rock music
-Renata Litvinova,Russian actress director and screenwriter,1967,1967-01-12,https://en.wikipedia.org/wiki/Renata_Litvinova,Known for her eccentric acting style and films
-Laurie Anderson,American avant-garde artist and experimental musician,1947,1947-06-05,https://en.wikipedia.org/wiki/Laurie_Anderson,Known for 'O Superman'
-Jean Iris Murdoch,British novelist and philosopher,1919,1919-07-15,https://en.wikipedia.org/wiki/Iris_Murdoch,Famous for her philosophical novels
-Takeo Suzuki,Japanese artist and painter,Unknown,Unknown,https://en.wikipedia.org/wiki/Takeo_Suzuki_(artist),Famous for blending Japanese traditional and modern styles
-Quentin Tarantino,American filmmaker and screenwriter,1963,1963-03-27,https://en.wikipedia.org/wiki/Quentin_Tarantino,Known for 'Pulp Fiction' and 'Kill Bill'
-Uma Thurman,American actress and model,1970,1970-04-29,https://en.wikipedia.org/wiki/Uma_Thurman,Known for her roles in 'Pulp Fiction' and 'Kill Bill'
-Grace Jones,Jamaican singer and model,1948,1948-05-19,https://en.wikipedia.org/wiki/Grace_Jones,Known for her androgynous image and 'Slave to the Rhythm'
-Nikola Tesla,,,,,
-Mark Twain,,,,,
-Yorgos Lanthimos,,,,,
+name,most_known_for,bio,year_of_birth,date_of_birth,wiki_link,more
+Albert Einstein,scientist,Physicist known for the theory of relativity,1879,1879-03-14,https://en.wikipedia.org/wiki/Albert_Einstein,Nobel Prize in Physics
+Frida Kahlo,painter,Mexican painter known for her self-portraits,1907,1907-07-06,https://en.wikipedia.org/wiki/Frida_Kahlo,Famous for surreal and vibrant self-portraits
+Bertrand Russell,philosopher,British philosopher and logician,1872,1872-05-18,https://en.wikipedia.org/wiki/Bertrand_Russell,Nobel Prize in Literature
+Sandro Botticelli,painter,Italian painter of the Early Renaissance,1445,1445-03-01,https://en.wikipedia.org/wiki/Sandro_Botticelli,Famous for 'The Birth of Venus'
+Oscar Wilde,writer,Irish poet and playwright,1854,1854-10-16,https://en.wikipedia.org/wiki/Oscar_Wilde,Famous for 'The Picture of Dorian Gray'
+Thomas Wolfe,writer,American novelist,1900,1900-10-03,https://en.wikipedia.org/wiki/Thomas_Wolfe,Author of 'Look Homeward and 'Angel'
+Boris Grebenshchikov,musician,Russian rock musician and songwriter,1953,1953-11-27,https://en.wikipedia.org/wiki/Boris_Grebenshchikov,Founder of the band Aquarium
+Pyotr Ilyich Tchaikovsky,musician,Russian composer of the Romantic period,1840,1840-05-07,https://en.wikipedia.org/wiki/Pyotr_Ilyich_Tchaikovsky,Composed famous ballets like 'Swan Lake' and 'The Nutcracker'
+Zhanna Aguzarova,musician,Russian pop-rock singer and former vocalist of the band Bravo,1962,1962-07-07,https://en.wikipedia.org/wiki/Zhanna_Aguzarova,A major figure in the Soviet rock scene
+Cleopatra,queen,Last active ruler of the Ptolemaic Kingdom of Egypt,69-BC,69-BC,https://en.wikipedia.org/wiki/Cleopatra,Renowned for her intelligence and political acumen
+Plato,philosopher,Classical Greek philosopher and founder of the Academy,428-BC,428-BC,https://en.wikipedia.org/wiki/Plato,Student of Socrates and teacher of Aristotle
+Socrates,philosopher,Classical Greek philosopher known for his contributions to ethics,470-BC,470-BC,https://en.wikipedia.org/wiki/Socrates,Founder of Western philosophy
+Amy Winehouse,musician,British singer-songwriter known for her deep and expressive vocals',1983,1983-09-14,https://en.wikipedia.org/wiki/Amy_Winehouse,Known for 'Back to Black'
+Diana Arbenina,musician,Russian rock singer leader of the band Night Snipers,1974,1974-07-08,https://en.wikipedia.org/wiki/Diana_Arbenina,Prominent figure in Russian rock music
+Renata Litvinova,actress,Russian actress director and screenwriter,1967,1967-01-12,https://en.wikipedia.org/wiki/Renata_Litvinova,Known for her eccentric acting style and films
+Laurie Anderson,musician,American avant-garde artist and experimental musician,1947,1947-06-05,https://en.wikipedia.org/wiki/Laurie_Anderson,Known for 'O Superman'
+Jean Iris Murdoch,writer,British novelist and philosopher,1919,1919-07-15,https://en.wikipedia.org/wiki/Iris_Murdoch,Famous for her philosophical novels
+Takeo Suzuki,painter,Japanese artist and painter,1955,unknown,https://en.wikipedia.org/wiki/Takeo_Suzuki_(artist),Famous for blending Japanese traditional and modern styles
+Quentin Tarantino,filmmaker,American filmmaker and screenwriter,1963,1963-03-27,https://en.wikipedia.org/wiki/Quentin_Tarantino,Known for 'Pulp Fiction' and 'Kill Bill'
+Uma Thurman,actress,American actress and model,1970,1970-04-29,https://en.wikipedia.org/wiki/Uma_Thurman,Known for her roles in 'Pulp Fiction' and 'Kill Bill'
+Grace Jones,musician,Jamaican singer and model,1948,1948-05-19,https://en.wikipedia.org/wiki/Grace_Jones,Known for her androgynous image and 'Slave to the Rhythm'
+Nikola Tesla,scientist,,1856,,https://en.wikipedia.org/wiki/Nikola_Tesla,
+Mark Twain,writer,,1835,,https://en.wikipedia.org/wiki/Mark_Twain,
+Yorgos Lanthimos,filmmaker,,1973,,https://en.wikipedia.org/wiki/Yorgos_Lanthimos,
+Lewis Carroll,writer,,1832,,https://en.wikipedia.org/wiki/Lewis_Carroll,
+Haruki Murakami,writer,,1949,,https://en.wikipedia.org/wiki/Haruki_Murakami,
+David Lynch,filmmaker,,1946,,https://en.wikipedia.org/wiki/David_Lynch,
+Michelle Gurevich,musician,,,,https://en.wikipedia.org/wiki/Michelle_Gurevich,
+Salvador Dali,painter,,1904,,https://en.wikipedia.org/wiki/Salvador_Dal%C3%AD,
+Alfred Hitchcock,filmmaker,,1899,,https://en.wikipedia.org/wiki/Alfred_Hitchcock,
+Bernardo Bertolucci,filmmaker,,1941,,https://en.wikipedia.org/wiki/Bernardo_Bertolucci,
+Robert Altman,filmmaker,,1925,,https://en.wikipedia.org/wiki/Robert_Altman,
+Akira Kurosawa,filmmaker,,1910,,https://en.wikipedia.org/wiki/Akira_Kurosawa,
+Rudolf Steiner,philosopher,,1861,,https://en.wikipedia.org/wiki/Rudolf_Steiner,
+Richard Feynman,scientist,,1918,,https://en.wikipedia.org/wiki/Richard_Feynman,
+Ruth Bader Ginsburg,lawyer,,1933,,https://en.wikipedia.org/wiki/Ruth_Bader_Ginsburg,
+Jane Fonda,actress,,1937,,https://en.wikipedia.org/wiki/Jane_Fonda,https://www.haaretz.co.il/gallery/cinema/2020-09-30/ty-article-magazine/.premium/0000017f-da72-d432-a77f-df7bb54e0000
+Johannes Felten,photographer,,1911,,https://en.wikipedia.org/wiki/Toyo_Shibata,https://www.yumpu.com/en/document/read/6794254/red-sea-world-shootout-2011-eilat-red-sea/23
+Toyo Shibata,writer,,1911,,https://www.haaretz.co.il/blogs/somethingtoread/2018-02-07/ty-article/0000017f-dc48-d3ff-a7ff-fde871750000,
+William Shakespeare,writer,,1564,,https://en.wikipedia.org/wiki/William_Shakespeare,
+Leo Tolstoy,writer,,1828,,https://en.wikipedia.org/wiki/Leo_Tolstoy,
+José de Sousa Saramago,writer,,1922,,https://en.wikipedia.org/wiki/Jos%C3%A9_Saramago,
+Jerome Salinger,writer,,1919,,https://en.wikipedia.org/wiki/J._D._Salinger,
+Indira Gandhi,politician,,1917,,https://en.wikipedia.org/wiki/Indira_Gandhi,https://time.com/5793650/indira-gandhi-100-women-of-the-year/
+Golda Meir,politician,,1898,,https://en.wikipedia.org/wiki/Rachel_Goldberg-Polin,
+Rachel Goldberg-Polin,activist,,1970,,https://en.wikipedia.org/wiki/Rachel_Goldberg-Polin,
+Giordano Bruno,philosopher,,1548,,https://en.wikipedia.org/wiki/Giordano_Bruno,
+Leonardo da Vinci,scientist,,1452,,https://en.wikipedia.org/wiki/Leonardo_da_Vinci,
+Agatha Christie,writer,,1890,,https://en.wikipedia.org/wiki/Agatha_Christie,
+Esther Hayut,politician,,1953,,https://en.wikipedia.org/wiki/Esther_Hayut,
+Gali Baharav-Miara,lawyer,,1959,,https://en.wikipedia.org/wiki/Gali_Baharav-Miara,
