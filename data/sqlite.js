@@ -2,8 +2,13 @@ const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 const csvParser = require('csv-parser');
 
+// Define the path for the SQLite database
+//const dbPath = '/data/sqlite.db';
+const dbPath = './sqlite.db';
+
+
 // Create and connect to SQLite database
-const db = new sqlite3.Database('./.data/sqlite.db', (err) => {
+const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database:', err.message);
   } else {
@@ -14,13 +19,14 @@ const db = new sqlite3.Database('./.data/sqlite.db', (err) => {
 // Function to drop and recreate all tables
 function resetDatabase() {
   db.serialize(() => {
+    // Drop existing tables if they exist
     db.run('DROP TABLE IF EXISTS people');
     db.run('DROP TABLE IF EXISTS people_quotes');
     db.run('DROP TABLE IF EXISTS people_creations');
     db.run('DROP TABLE IF EXISTS people_connections');
-
     console.log('All tables dropped.');
 
+    // Create the tables
     db.run(`
       CREATE TABLE people (
         id INTEGER PRIMARY KEY, 
@@ -68,7 +74,7 @@ function resetDatabase() {
   });
 }
 
-// Function to import data from CSV files
+// Function to import data from CSV files into the database
 function importCSVData() {
   fs.createReadStream('./data/people.csv')
     .pipe(csvParser())
@@ -77,7 +83,9 @@ function importCSVData() {
         'INSERT INTO people (id, name, bio, year_of_birth, date_of_birth, wiki_link, more) VALUES (?, ?, ?, ?, ?, ?, ?)',
         [row.id, row.name, row.bio, row.year_of_birth, row.date_of_birth, row.wiki_link, row.more],
         (err) => {
-          if (err) console.error('Error inserting row:', row, err.message);
+          if (err) {
+            console.error('Error inserting row:', row, err.message);
+          }
         }
       );
     })

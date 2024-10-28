@@ -1,6 +1,6 @@
 const d3 = require('d3-cloud');
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./.data/sqlite.db');
+const db = new sqlite3.Database('./sqlite.db'); // Ensure this path matches your setup
 
 // Fetch all people from the database
 function fetchPeopleData(callback) {
@@ -9,39 +9,39 @@ function fetchPeopleData(callback) {
       console.error('Error fetching data:', err.message);
       return;
     }
-    callback(rows); // Pass the data to the word cloud function
+    callback(rows);
   });
 }
 
 function createWordCloud(words) {
   const width = document.getElementById('word-cloud-container').offsetWidth;
-  const height = words.length * 60;  // Set height dynamically based on the number of words
-
-  // Create the cloud layout
+  const height = 10;  // Adjust to desired fixed height
+  
   const layout = d3.layout.cloud()
-    .size([width, height])
+    .size([width, 600])
     .words(words.map(d => ({
       text: d.name,
-      size: Math.random() * 30 + 20, // Adjust size to fit more words
+      size: Math.random() * 30 + 20,
       link: d.wiki_link,
     })))
-    .padding(10) // Increase padding to prevent overlap
-    .rotate(() => 0) // Keep all words horizontal
+    .padding(10)
+    .rotate(() => 0)
     .fontSize(d => d.size)
-    .on('end', draw);
+    .on('end', (computedWords) => draw(computedWords, width, 600));
 
-  layout.start(); // Start the layout process
+  layout.start();
 }
 
-function draw(words) {
+
+function draw(words, width, height) {
   const container = d3.select('#word-cloud-container');
   container.html(''); // Clear any previous content
 
   const svg = container.append('svg')
-    .attr('width', container.node().offsetWidth)
-    .attr('height', words.length * 60) // Adjust SVG height dynamically
+    .attr('width', width)
+    .attr('height', height)
     .append('g')
-    .attr('transform', `translate(${container.node().offsetWidth / 2}, 300)`); // Center the cloud
+    .attr("transform", `translate(${width / 2}, 300)`);
 
   svg.selectAll('text')
     .data(words)
@@ -49,12 +49,13 @@ function draw(words) {
     .style('font-size', d => `${d.size}px`)
     .style('fill', '#000')
     .attr('text-anchor', 'middle')
-    .attr('transform', d => `translate(${d.x}, ${d.y}) rotate(${d.rotate})`)
+    .attr('transform', d => `translate(${d.x}, ${d.y})`)
     .text(d => d.text)
     .on('click', (event, d) => {
-      if (d.link) window.open(d.link, '_blank'); // Open the wiki link in a new tab
+      if (d.link) window.open(d.link, '_blank');
     });
 }
+
 
 // Fetch data from the database and create the word cloud
 fetchPeopleData(createWordCloud);

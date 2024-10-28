@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #FFE6F8;
+  background-color: #ECECEC;
 }
 
 /* Wrapper for content */
@@ -19,7 +19,7 @@ body {
 /* Styling for the word cloud container */
 #word-cloud-container {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 /* Center SVG in the container */
@@ -30,13 +30,15 @@ svg {
 
 /* Title and paragraph styling */
 h1 {
-  color: #2800FF;
+  color: #2C2C54;
   font-size: 50px;
   margin: 10px 0;
+  text-align: center;
 }
 p {
   font-size: 1.25rem;
   margin: 5px 0;
+  text-align: center;
 }
 
 /* Styling for the footer */
@@ -55,6 +57,19 @@ p {
 
 /* Error message styling */
 p.error {
-  color: #FF0000;
+  color: #474787;
   font-weight: bold;
+}
+#word-cloud-container {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1 {
+  margin-bottom: 10px; /* Reduce gap below title */
+}
+
+#word-cloud-container svg {
+  margin-top: 0;
+  padding-top: 0;
 }
