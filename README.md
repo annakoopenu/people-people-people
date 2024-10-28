@@ -1,14 +1,15 @@
+# People People People
+
+In the end, it's all about people. The goal of this project is to build a nice way to go through different great (mostly) people and be engaged with their creations.
+
+This is the first step, the MVP.
+
+
 # Hello SQLite!
 
 This project includes a [Node.js](https://nodejs.org/en/about/) server script that uses a persistent [SQLite](https://www.sqlite.org) database. The app also includes a front-end with two web pages that connect to the database using the server API. 📊
 
-The home page presents the user with a poll where they can choose an option, then the page presents the results in a chart. The admin page displays the log of past choices and allows the user to clear it by supplying an admin key (you can set this up by following the steps in `TODO.md`). 🔒
-
-_Last updated: 14 August 2023_
-
-## Prerequisites
-
-To get best use out of this project you'll ideally be familiar with JavaScript and have a little Node.js experience–check out [Hello Node](https://glitch.com/~glitch-hello-node) if you haven't already!
+_Last updated: 28 Oct 2024_
 
 ## What's in this project?
 
@@ -44,17 +45,3 @@ When the app runs, the scripts build the database:
 
 ## Try this next 🏗️
 
-Take a look in `TODO.md` for steps in setting up your admin key and adding to the site functionality.
-
-💡 __Want to use the server script as an API without using the front-end UI? No problem! Just send a query parameter `?raw=json` with your requests to return JSON, like this (replace the first part of the URL to match your remix): `glitch-hello-sqlite.glitch.me?raw=json`__
-
-___Check out [Blank SQLite](https://glitch.com/~glitch-blank-sqlite) for a minimal demo of get, post, put, and delete methods.___
-
-![Glitch](https://cdn.glitch.com/a9975ea6-8949-4bab-addb-8a95021dc2da%2FLogo_Color.svg?v=1602781328576)
-
-## You built this with Glitch!
-
-[Glitch](https://glitch.com) is a friendly community where millions of people come together to build web apps and websites.
-
-- Need more help? [Check out our Help Center](https://help.glitch.com/) for answers to any common questions.
-- Ready to make it official? [Become a paid Glitch member](https://glitch.com/pricing) to boost your app with private sharing, more storage and memory, domains and more.

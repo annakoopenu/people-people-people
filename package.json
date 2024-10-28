@@ -21,12 +21,13 @@
     "node": "14.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/hello-sqlite"
+  "type": "git",
+  "url": "https://github.com/annakoopenu/people-people-people.git"
   },
   "license": "MIT",
   "keywords": [
     "node",
-    "glitch",
-    "sqlite"
+    "sqlite",
+    "people"
   ]
 }

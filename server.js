@@ -9,7 +9,7 @@ fastify.register(require("@fastify/formbody"));
 
 // Load SEO data
 const seo = require("./src/seo.json");
-seo.url = seo.url === "glitch-default" ? `https://${process.env.PROJECT_DOMAIN}.glitch.me` : seo.url;
+seo.url = seo.url || "http://localhost:3000"; // Fallback to localhost if URL isn't defined
 
 /**
  * Helper function to query the database using `db.all()`.
@@ -43,6 +43,19 @@ fastify.get("/", async (request, reply) => {
     return reply.code(500).send({ error: "Internal Server Error" });
   }
 });
+/**
+ * Page - admin route
+ */
+fastify.get("/admin", async (request, reply) => {
+  try {
+    reply.view("/src/pages/admin.hbs", { seo });
+  } catch (error) {
+    console.error("Error in Admin Route:", error);
+    reply.code(500).send({ error: "Internal Server Error" });
+  }
+});
+
+
 
 /**
  * Start the server and initialize the database.
