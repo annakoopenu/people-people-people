@@ -7,10 +7,6 @@ fastify.register(require("@fastify/static"), { root: path.join(__dirname, "publi
 fastify.register(require("@fastify/view"), { engine: { handlebars: require("handlebars") } });
 fastify.register(require("@fastify/formbody"));
 
-// Load SEO data
-const seo = require("./src/seo.json");
-seo.url = seo.url || "http://localhost:3000"; // Fallback to localhost if URL isn't defined
-
 /**
  * Helper function to query the database using `db.all()`.
  */
