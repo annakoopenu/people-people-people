@@ -29,29 +29,28 @@ function dbQuery(query, params = []) {
 fastify.get("/", async (request, reply) => {
   try {
     const people = await dbQuery('SELECT * FROM people');
-    const params = { seo, optionNames: JSON.stringify(people) };
+    const params = { optionNames: JSON.stringify(people) };
 
     return request.query.raw
       ? reply.send(params)
       : reply.view("/src/pages/index.hbs", params);
   } catch (error) {
     console.error("Error in Home Route:", error);
-    return reply.code(500).send({ error: "Internal Server Error" });
+    return reply.code(500).send({ error: "Internal Server Error: " + error.message });
   }
 });
+
 /**
  * Page - admin route
  */
 fastify.get("/admin", async (request, reply) => {
   try {
-    reply.view("/src/pages/admin.hbs", { seo });
+    reply.view("/src/pages/admin.hbs");
   } catch (error) {
     console.error("Error in Admin Route:", error);
-    reply.code(500).send({ error: "Internal Server Error" });
+    reply.code(500).send({ error: "Internal Server Error: " + error.message });
   }
 });
-
-
 
 /**
  * Start the server and initialize the database.

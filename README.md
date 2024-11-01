@@ -45,3 +45,4 @@ When the app runs, the scripts build the database:
 
 ## Try this next 🏗️
 
+![Alt Text](/Screenshot%202024-11-01.png)
