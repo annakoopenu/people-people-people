@@ -5,15 +5,13 @@ In the end, it's all about people. The goal of this project is to build a nice w
 This is the first step, the MVP.
 
 
-# Hello SQLite!
+# Node.js & SQLite
 
 This project includes a [Node.js](https://nodejs.org/en/about/) server script that uses a persistent [SQLite](https://www.sqlite.org) database. The app also includes a front-end with two web pages that connect to the database using the server API. 📊
 
-_Last updated: 28 Oct 2024_
+_Last updated: 02 Nov 2024_
 
 ## What's in this project?
-
-← `README.md`: That’s this file, where you can tell people what your cool website does and how you built it.
 
 ← `package.json`: The NPM packages for project's dependencies.
 
@@ -26,7 +24,7 @@ _Last updated: 28 Oct 2024_
 
 When the app runs, the scripts build the database:
 
-← `.data/sqlite.db`: Your database is created and SHOULD BE placed in the `.data` folder, a hidden directory whose contents aren’t copied when a project is remixed. 
+← `.data/sqlite.db`: The database is created and SHOULD BE placed in the `.data` folder, a hidden directory whose contents aren’t copied when a project is remixed. 
 
 ### User interface
 
@@ -42,3 +40,12 @@ When the app runs, the scripts build the database:
 ## How the result looks
 
 ![Alt Text](/Screenshot%202024-11-01.png)
+
+## How to run this code
+
+- Clone this repo
+- Create a Code Space
+- Type at Code Space's TERMINAL: $ npm start
+- Press 'Open in Browser' in the pop up message
+- It should open a new Tab in your Browser and present something similar to the ScreenShot above
+
